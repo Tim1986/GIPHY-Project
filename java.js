@@ -3,7 +3,7 @@ var pixarCharacters = ["Buzz Lightyear", "Woody", "Slinky Dog", "Mr. Potato Head
 var displayMeme = function() {
 
     var character = $(this).attr("data-name")    
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + character + "&limit=5&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9"
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + character + "&limit=10&api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9"
 
     $.ajax({
         url: queryURL,
@@ -11,9 +11,14 @@ var displayMeme = function() {
     }).then(function(response) {
         console.log(response)
         for (var i = 0; i < response.data.length; i++) {
-            $("#memes-view").append('<img src="' + response.data[i].url + '" alt="">')
+            $("#memes-view").prepend('<img class="displayed" src="' + response.data[i].images.fixed_height_still.url + '">')
         }
     })
+}
+
+var animateMeme = function() {
+    var clickedMeme = $(this).attr("displayed")
+    console.log(clickedMeme)
 }
 
 var renderButtons = function() {
@@ -43,3 +48,5 @@ $("#add-meme").on("click", function(event) {
 renderButtons();
 
 $(document).on("click", ".meme-type", displayMeme);
+
+$(document).on("click", ".displayed", animateMeme);
