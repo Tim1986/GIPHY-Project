@@ -17,7 +17,8 @@ var displayMeme = function() {
 }
 
 var animateMeme = function() {
-    var clickedMeme = $(this).attr("displayed")
+    //Add new Ajax call here, because I can't access the response.data outside of that call
+    var clickedMeme = $(this).attr("src", response.data.images.fixed_height.url)
     console.log(clickedMeme)
 }
 
