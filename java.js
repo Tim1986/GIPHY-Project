@@ -11,16 +11,16 @@ var displayMeme = function() {
     }).then(function(response) {
         console.log(response)
         for (var i = 0; i < response.data.length; i++) {
-            $("#memes-view").prepend('<img class="displayed" src="' + response.data[i].images.fixed_height_still.url + '">')
+            $("#memes-view").prepend(`<img class="displayed gif" src="${response.data[i].images.fixed_height_still.url}" data-change="${response.data[i].images.fixed_height.url}">`)
         }
     })
 }
 
-var animateMeme = function() {
-    //Add new Ajax call here, because I can't access the response.data outside of that call
-    var clickedMeme = $(this).attr("src", response.data.images.fixed_height.url)
-    console.log(clickedMeme)
-}
+// var animateMeme = function() {
+//     //Add new Ajax call here, because I can't access the response.data outside of that call
+//     var clickedMeme = $(this).attr("src", response.data.images.fixed_height.url)
+//     console.log(clickedMeme)
+// }
 
 var renderButtons = function() {
 
@@ -50,4 +50,8 @@ renderButtons();
 
 $(document).on("click", ".meme-type", displayMeme);
 
-$(document).on("click", ".displayed", animateMeme);
+$(document).on("click", ".gif", function() {
+    var placeholder = $(this).attr("src");
+    $(this).attr("src", $(this).attr("data-change"));
+    $(this).attr("data-change", placeholder);
+});
